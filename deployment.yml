@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: invoice-build
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: <IMAGE>
+          command: ["/bin/sh"]
+          args: ["-c", "bundle exec rake db:migrate; bundle exec puma -C config/puma.rb"]
+          ports:
+            - containerPort: 5000
+          env:
+          - name: RACK_ENV
+            value: 'production'
+          - name: RAILS_ENV
+            value: 'production'
+          - name: RAILS_MAX_THREADS
+            value: '5'
+          - name: RAILS_LOG_TO_STDOUT
+            value: 'true'
+          - name: FRONT_URL
+            value: invoice.build
+          - name: CORS_ORIGINS
+            value: invoice.build
+          - name: ETH_UTILS_API_HOST
+            value: eth-utils-api
+          - name: ETH_UTILS_API_PORT
+            value: '3001'
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: api
+                key: DATABASE_URL
+          - name: RAILS_MASTER_KEY
+            valueFrom:
+              secretKeyRef:
+                name: api
+                key: RAILS_MASTER_KEY
+          - name: REDIS_URL
+            valueFrom:
+              secretKeyRef:
+                name: api
+                key: REDIS_URL
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 40
+            periodSeconds: 30
+            timeoutSeconds: 3 # can be much less
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 20 # app specific
+            periodSeconds: 30
+            timeoutSeconds: 3 # can be much less
+      imagePullSecrets:
+        - name: regcred

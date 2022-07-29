@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sidekiq
+  namespace: invoice-build
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sidekiq
+  template:
+    metadata:
+      labels:
+        app: sidekiq
+    spec:
+      containers:
+        - name: sidekiq
+          image: <IMAGE>
+          command: ["/bin/sh"]
+          args: ["-c", "bundle exec rake db:migrate; bundle exec sidekiq -C config/sidekiq.yml"]
+          ports:
+            - containerPort: 7433
+          env:
+          - name: RACK_ENV
+            value: 'production'
+          - name: RAILS_ENV
+            value: 'production'
+          - name: RAILS_MAX_THREADS
+            value: '5'
+          - name: RAILS_LOG_TO_STDOUT
+            value: 'true'
+          - name: FRONT_URL
+            value: invoice.build
+          - name: CORS_ORIGINS
+            value: invoice.build
+          - name: ETH_UTILS_API_HOST
+            value: eth-utils-api
+          - name: ETH_UTILS_API_PORT
+            value: '3001'
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: api
+                key: DATABASE_URL
+          - name: RAILS_MASTER_KEY
+            valueFrom:
+              secretKeyRef:
+                name: api
+                key: RAILS_MASTER_KEY
+          - name: REDIS_URL
+            valueFrom:
+              secretKeyRef:
+                name: api
+                key: REDIS_URL
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 7433
+            initialDelaySeconds: 40
+            periodSeconds: 30
+            timeoutSeconds: 3 # can be much less
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 7433
+            initialDelaySeconds: 20 # app specific
+            periodSeconds: 30
+            timeoutSeconds: 3 # can be much less
+          lifecycle:
+            preStop:
+              exec:
+                # SIGTERM triggers a quick exit; gracefully terminate instead
+                command: ["sidekiq_quiet"]
+      terminationGracePeriodSeconds: 20 # put your longest Job time here plus security time.
+      imagePullSecrets:
+        - name: regcred

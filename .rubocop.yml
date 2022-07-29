@@ -1,0 +1,60 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'bin/**/*'
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
+Style/NumericLiterals:
+  Enabled: false
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+Layout/LineLength:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+Style/ExponentialNotation:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Style/FormatStringToken:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'lib/active_storage/**/*'
+    - 'test/**/*'
+    - 'app/jobs/**/*'
+Style/MissingRespondToMissing:
+  Enabled: false
+Lint/MissingSuper:
+  Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - 'test/**/*'
+    - 'app/controllers/concerns/**/*'
+    - 'lib/tasks/**/*'
+Style/SingleArgumentDig:
+  Enabled: false
+Naming/AccessorMethodName:
+  Enabled: false
+Naming/MethodParameterName:
+  Exclude:
+    - 'app/models/concerns/tokenable.rb'

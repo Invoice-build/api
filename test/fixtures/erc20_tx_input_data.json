@@ -1,0 +1,6 @@
+{
+  "names": ["recipient", "amount"],
+  "types": ["address", "uint256"],
+  "inputs": ["bee21365a462b8df12cfe9ab7c40f1bb5f5ed495", "4563918244f40000"],
+  "method": "transfer"
+}
