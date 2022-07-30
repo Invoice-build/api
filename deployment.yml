@@ -64,7 +64,7 @@ spec:
             httpGet:
               path: /
               port: 5000
-            initialDelaySeconds: 40 # app specific
+            initialDelaySeconds: 60 # app specific
             periodSeconds: 30
             timeoutSeconds: 3 # can be much less
       imagePullSecrets:
