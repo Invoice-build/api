@@ -25,7 +25,7 @@ gem 'rack-cors'
 
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'awesome_print'
-gem 'eth'
+gem 'eth', '0.4.12'
 gem 'event_bus'
 gem 'sentry-rails'
 gem 'sentry-ruby'
