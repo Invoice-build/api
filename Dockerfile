@@ -1,4 +1,4 @@
-FROM ruby:2.7.2-alpine as builder
+FROM ruby:2.7.6-alpine as builder
 
 RUN apk add --no-cache --update build-base \
                                 postgresql-dev \
@@ -11,7 +11,7 @@ COPY Gemfile Gemfile.lock /app/
 RUN RAILS_ENV=production bundle install --without development test \
     && rm -rf /usr/local/bundle/bundler/gems/*/.git /usr/local/bundle/cache/
 
-FROM ruby:2.7.2-alpine
+FROM ruby:2.7.6-alpine
 
 RUN apk add --no-cache --update postgresql-dev \
                                 tzdata \

@@ -25,6 +25,8 @@ spec:
             value: 'production'
           - name: RAILS_ENV
             value: 'production'
+          - name: PORT
+            value: '5000'
           - name: RAILS_MAX_THREADS
             value: '5'
           - name: RAILS_LOG_TO_STDOUT
@@ -57,14 +59,14 @@ spec:
             httpGet:
               path: /
               port: 5000
-            initialDelaySeconds: 40
+            initialDelaySeconds: 60
             periodSeconds: 30
             timeoutSeconds: 3 # can be much less
           readinessProbe:
             httpGet:
               path: /
               port: 5000
-            initialDelaySeconds: 20 # app specific
+            initialDelaySeconds: 60 # app specific
             periodSeconds: 30
             timeoutSeconds: 3 # can be much less
       imagePullSecrets:
