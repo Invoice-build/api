@@ -32,6 +32,7 @@ gem 'sentry-ruby'
 gem 'sidekiq'
 gem 'sidekiq_alive'
 gem 'slack-notifier'
+gem 'redis-namespace'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
