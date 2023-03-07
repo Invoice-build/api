@@ -12,10 +12,11 @@ jobs:
   Lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-ruby@v1
+    - uses: actions/checkout@v3
+    - uses: ruby/setup-ruby@v1
       with:
         ruby-version: '2.7'
+        bundler-cache: true
     - run: |
         gem install rubocop -v 0.89.0
         rubocop
@@ -34,10 +35,11 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-ruby@v1
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.7'
+          bundler-cache: true
       - uses: actions/cache@v2
         with:
           path: vendor/bundle
