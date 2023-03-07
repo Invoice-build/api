@@ -48,6 +48,6 @@ namespace :seed do
     Token.where(
       address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
       network: 'polygon'
-    ).first_or_create(code: 'USDT', standard: 'erc20', decimals: 6)    
+    ).first_or_create(code: 'USDT', standard: 'erc20', decimals: 6)
   end
 end

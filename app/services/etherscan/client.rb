@@ -12,12 +12,12 @@ module Etherscan
       mainnet: 'api.etherscan.io',
       goerli: 'api-goerli.etherscan.io',
       polygon: 'api.polygonscan.com'
-    }
+    }.freeze
     PLATFORMS = {
       mainnet: 'etherscan',
       goerli: 'etherscan',
       polygon: 'polygonscan'
-    }
+    }.freeze
 
     def initialize(network: 'mainnet')
       domain = DOMAINS[network.to_sym]
