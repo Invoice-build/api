@@ -7,13 +7,23 @@ module Etherscan
     attr_reader :url, :api_key
 
     PROTOCOL = 'https://'
-    DOMAIN = 'etherscan.io'
     BASE_PATH = '/api'
+    DOMAINS = {
+      mainnet: 'api.etherscan.io',
+      goerli: 'api-goerli.etherscan.io',
+      polygon: 'api.polygonscan.com'
+    }
+    PLATFORMS = {
+      mainnet: 'etherscan',
+      goerli: 'etherscan',
+      polygon: 'polygonscan'
+    }
 
     def initialize(network: 'mainnet')
-      subdomain = network == 'mainnet' ? 'api' : "api-#{network}"
-      @url = "#{PROTOCOL}#{subdomain}.#{DOMAIN}#{BASE_PATH}"
-      @api_key = Creds.fetch(:etherscan, :api_key)
+      domain = DOMAINS[network.to_sym]
+      platform = PLATFORMS[network.to_sym]
+      @url = "#{PROTOCOL}#{domain}#{BASE_PATH}"
+      @api_key = Creds.fetch(platform.to_sym, :api_key)
     end
 
     def get_block_number

@@ -32,5 +32,22 @@ namespace :seed do
       address: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
       network: 'ropsten'
     ).first_or_create(code: 'WEENUS', standard: 'erc20')
+
+    Token.where(
+      address: '0x0000000000000000000000000000000000000000',
+      network: 'polygon'
+    ).first_or_create(code: 'MATIC', standard: 'native', decimals: 18)
+    Token.where(
+      address: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
+      network: 'polygon'
+    ).first_or_create(code: 'DAI', standard: 'erc20', decimals: 18)
+    Token.where(
+      address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+      network: 'polygon'
+    ).first_or_create(code: 'USDC', standard: 'erc20', decimals: 6)
+    Token.where(
+      address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+      network: 'polygon'
+    ).first_or_create(code: 'USDT', standard: 'erc20', decimals: 6)    
   end
 end

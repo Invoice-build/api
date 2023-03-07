@@ -15,7 +15,7 @@ module Infura
     def initialize(network: 'mainnet')
       @project_id     = Creds.fetch(:infura, :project_id)
       @project_secret = Creds.fetch(:infura, :project_secret)
-      @host           = "#{network}.#{DOMAIN}"
+      @host           = "#{get_subdomain(network)}.#{DOMAIN}"
       @base_path      = "/#{VERSION}/#{project_id}"
       @debug          = false
     end
@@ -28,6 +28,15 @@ module Infura
     end
 
     private
+
+    def get_subdomain(network)
+      case network
+      when 'mainnet' then 'mainnet'
+      when 'goerli'  then 'goerli'
+      when 'polygon' then 'polygon-mainnet'
+      else raise 'Network not supported'
+      end
+    end
 
     def payload(method, params)
       {
